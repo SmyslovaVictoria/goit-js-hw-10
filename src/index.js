@@ -24,6 +24,9 @@ function onInput(e) {
         if (data.length === 1) {
           countryList.innerHTML = makeListMarkup(data);
           countryInfo.innerHTML = makeInfoMarkup(data);
+        } else if (data.length === 1) {
+          countryList.innerHTML = makeListMarkup(data);
+          countryInfo.innerHTML = makeInfoMarkup(data);
         } else if (data.length > 10) {
           clearMarkup();
           alertInfo();
@@ -31,7 +34,9 @@ function onInput(e) {
           countryList.innerHTML = makeListMarkup(data);
         }
       })
-        .catch(alertFailure());
+      .catch(error => {
+        console.log(alertFailure());
+      });
     // -----не правильно выволится информация об ошибке-----
     //   .catch(() => alertFailure());
 }
