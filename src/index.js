@@ -13,32 +13,31 @@ searchBox.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
 
 // Передача данных и основная логика -----------------------------------
 
-function onInput(e) {
+function onInput(e) { 
   e.preventDefault();
-
+    clearMarkup();
+    
+    if (e.target.value.trim() === "") {
+        return;
+    }
     const value = e.target.value.trim();
 
     fetchCountries(value)
       .then(data => {
         clearMarkup();
-        if (data.length === 1) {
-          countryList.innerHTML = makeListMarkup(data);
-          countryInfo.innerHTML = makeInfoMarkup(data);
+        if (data.length === 0) {
+            return;
         } else if (data.length === 1) {
           countryList.innerHTML = makeListMarkup(data);
           countryInfo.innerHTML = makeInfoMarkup(data);
         } else if (data.length > 10) {
           clearMarkup();
           alertInfo();
-        } else if (data.length > 2 && data.length <= 10) {
+        } else if (data.length >= 2 && data.length <= 10) {
           countryList.innerHTML = makeListMarkup(data);
         }
       })
-      .catch(error => {
-        console.log(alertFailure());
-      });
-    // -----не правильно выволится информация об ошибке-----
-    //   .catch(() => alertFailure());
+      .catch( error => console.error());
 }
 
 //  Разметка ----------------------------------------------
